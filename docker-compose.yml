@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  route-service:
+    build: .
+    ports:
+      - "5003:5003"
+    environment:
+      - CLIENTS_API_URL=${CLIENTS_API_URL}
+      - JWT_SIGNING_KEY=${JWT_SIGNING_KEY}
+      - JWT_ISSUER=${JWT_ISSUER}
+      - JWT_AUDIENCE=${JWT_AUDIENCE}
