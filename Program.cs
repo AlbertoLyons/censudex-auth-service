@@ -34,6 +34,9 @@ ClientsService clientsService = new ClientsService(new HttpClient(), clients_api
 //var response = await clientsService.VerifyClientAsync<object>("adminCensudex", "Admin1234!");
 builder.Services.AddSingleton(clientsService);
 builder.Services.AddOpenApi();
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddAuthorization();
 
 
@@ -47,4 +50,6 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
+app.MapControllers();
+
 app.Run();

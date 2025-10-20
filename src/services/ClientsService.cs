@@ -1,6 +1,8 @@
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
+using censudex_auth_service.src.models;
 
 namespace censudex_auth_service.src.services
 {
@@ -12,7 +14,7 @@ namespace censudex_auth_service.src.services
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri(baseAddress + "/api/user/");
         }
-        public async Task<string> VerifyClientAsync<T>(string username, string password)
+        public async Task<Auth?> VerifyClientAsync<T>(string username, string password)
         {
             try
             {
@@ -21,29 +23,25 @@ namespace censudex_auth_service.src.services
                     Username = username,
                     Password = password
                 });
+                if (!response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine($"Failed verifying client: {response.StatusCode}");
+                    return null;
+                }
                 response.EnsureSuccessStatusCode();
-                var result = await response.Content.ReadFromJsonAsync<T>();
-                var resultString = result!.ToString();
-                if (resultString!.Contains("Client"))
+                var json = await response.Content.ReadAsStringAsync();
+                var authClient = JsonSerializer.Deserialize<Auth>(json, new JsonSerializerOptions
                 {
-                    return "200 OK. Client verified";
-                }
-                else if (resultString!.Contains("Admin"))
-                {
-                    return "200 OK. Admin verified";
-                }
-                else return "Error verifying client";
+                    PropertyNameCaseInsensitive = true
+                });
+                Console.WriteLine($"Verified client: {authClient?.UserName}");
+                return authClient;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                var result = "";
-                if (ex.Message.Contains("400"))
-                {
-                    result = "Error 400. Invalid credentials";
-                }
-                else result = "Error verifying client";
-                return result;
+                Console.WriteLine($"Error verifying client: {ex.Message}");
+                Auth result = null!;
+                return result!;
             }
         }
     }

@@ -11,6 +11,6 @@ namespace censudex_auth_service.src.models
         public Guid Id { get; set; }
         public string Email { get; set; } = string.Empty;
         public string UserName { get; set; } = string.Empty;
-        public IList<string>? Roles { get; set; }
+        public List<string>? Roles { get; set; }
     }
 }
