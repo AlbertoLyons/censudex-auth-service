@@ -34,7 +34,6 @@ namespace censudex_auth_service.src.services
                 {
                     PropertyNameCaseInsensitive = true
                 });
-                Console.WriteLine($"Verified client: {authClient?.UserName}");
                 return authClient;
             }
             catch (Exception ex)

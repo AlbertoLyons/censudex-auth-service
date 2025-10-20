@@ -30,7 +30,11 @@ namespace censudex_auth_service.src.controllers
                 return Unauthorized("Invalid username or password.");
             }
             var token = _tokenService.CreateToken(client);
-            return Ok(new { Token = token });
+            var result = new
+            {
+                Token = token
+            };
+            return Ok(result);
         }
     }
 }

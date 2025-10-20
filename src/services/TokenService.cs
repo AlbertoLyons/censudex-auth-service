@@ -23,8 +23,6 @@ namespace censudex_auth_service.src.services
             {
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-                new Claim(JwtRegisteredClaimNames.GivenName, user.UserName!),
             };
 
             if (user.Roles != null)
