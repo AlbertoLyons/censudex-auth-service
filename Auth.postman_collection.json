@@ -1,0 +1,381 @@
+{
+	"info": {
+		"_postman_id": "dc7912b8-10b8-48b1-b83c-77db4cd488bc",
+		"name": "Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34959437",
+		"_collection_link": "https://pm5555-1180.postman.co/workspace/censudex~d35666a5-243c-48a5-a764-be2248d7173f/collection/34959437-dc7912b8-10b8-48b1-b83c-77db4cd488bc?action=share&source=collection_link&creator=34959437"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"Jaime5\",\r\n    \"password\": \"Passw0rd2!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}auth",
+					"host": [
+						"{{URL}}auth"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200 Admin",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"adminCensudex\",\r\n    \"password\": \"Admin1234!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}auth",
+							"host": [
+								"{{URL}}auth"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 20 Oct 2025 20:34:14 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "br"
+						},
+						{
+							"key": "rndr-id",
+							"value": "3c1d802f-f07e-41fe"
+						},
+						{
+							"key": "vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "x-render-origin-server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "cf-cache-status",
+							"value": "DYNAMIC"
+						},
+						{
+							"key": "Server",
+							"value": "cloudflare"
+						},
+						{
+							"key": "CF-RAY",
+							"value": "991b4abcf862e9aa-SCL"
+						},
+						{
+							"key": "alt-svc",
+							"value": "h3=\":443\"; ma=86400"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI5ODI2YTk3My03ZDIzLTQyOWQtYjc2Ni02NWJkYjMzZDMzYjUiLCJuYW1laWQiOiJhMDZlMjBjNC1hODFmLTQxZjYtOTVlYy1jMTVkMGU4ZjJkZGQiLCJyb2xlIjoiQWRtaW4iLCJuYmYiOjE3NjA5OTI0NTQsImV4cCI6MTc2MTA3ODg1NCwiaWF0IjoxNzYwOTkyNDU0LCJpc3MiOiJjZW5zdWRleC1hdXRoLXNlcnZpY2UiLCJhdWQiOiJjZW5zdWRleC1hcGktdXNlcnMifQ.XyyZIeLZWnLU4B-qrFnf5mFWKWQoWP3aIlXYOl3MCFxHXmX7N5T7bo0wNs8g2VtBRXIgzV9AOLCDYu8NUcgF3g\"\n}"
+				},
+				{
+					"name": "200 Client",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"Jaime5\",\r\n    \"password\": \"Passw0rd2!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}auth",
+							"host": [
+								"{{URL}}auth"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 20 Oct 2025 21:07:00 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "br"
+						},
+						{
+							"key": "rndr-id",
+							"value": "f7e6b699-e9ac-4f54"
+						},
+						{
+							"key": "vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "x-render-origin-server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "cf-cache-status",
+							"value": "DYNAMIC"
+						},
+						{
+							"key": "Server",
+							"value": "cloudflare"
+						},
+						{
+							"key": "CF-RAY",
+							"value": "991b7b5a5f30e9b0-SCL"
+						},
+						{
+							"key": "alt-svc",
+							"value": "h3=\":443\"; ma=86400"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"token\": \"eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyYWY2Yjg3YS02YjUzLTRjN2UtOTIzNC02MTllNWJmZjc3YjYiLCJuYW1laWQiOiI2ZWVhOWUzOC03ZmU4LTRhNGEtODE3OC02Mzk5YWQwOTljMjgiLCJyb2xlIjoiQ2xpZW50IiwibmJmIjoxNzYwOTk0NDIwLCJleHAiOjE3NjEwODA4MjAsImlhdCI6MTc2MDk5NDQyMCwiaXNzIjoiY2Vuc3VkZXgtYXV0aC1zZXJ2aWNlIiwiYXVkIjoiY2Vuc3VkZXgtYXBpLXVzZXJzIn0.YHrDNu3zW91Tn8CiPj6mf6yOMtZ8qS9_72SPy4yHOrT9fH_kgVOzBrERrJnwA_T0-kMnzJUcSWHneBUUDVoOlA\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Validate token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}auth",
+					"host": [
+						"{{URL}}auth"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}auth",
+							"host": [
+								"{{URL}}auth"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 20 Oct 2025 21:07:41 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "br"
+						},
+						{
+							"key": "rndr-id",
+							"value": "dd04e0f1-a5c9-4d2d"
+						},
+						{
+							"key": "vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "x-render-origin-server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "cf-cache-status",
+							"value": "DYNAMIC"
+						},
+						{
+							"key": "Server",
+							"value": "cloudflare"
+						},
+						{
+							"key": "CF-RAY",
+							"value": "991b7c773e65e9b0-SCL"
+						},
+						{
+							"key": "alt-svc",
+							"value": "h3=\":443\"; ma=86400"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"6eea9e38-7fe8-4a4a-8178-6399ad099c28\",\n    \"roles\": [\n        \"Client\"\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT_TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}auth/logout",
+					"host": [
+						"{{URL}}auth"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "200",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}auth/logout",
+							"host": [
+								"{{URL}}auth"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 20 Oct 2025 21:07:57 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/plain; charset=utf-8"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "br"
+						},
+						{
+							"key": "rndr-id",
+							"value": "bab738bc-592b-4aa3"
+						},
+						{
+							"key": "vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "x-render-origin-server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "cf-cache-status",
+							"value": "DYNAMIC"
+						},
+						{
+							"key": "Server",
+							"value": "cloudflare"
+						},
+						{
+							"key": "CF-RAY",
+							"value": "991b7cddfd47e9b0-SCL"
+						},
+						{
+							"key": "alt-svc",
+							"value": "h3=\":443\"; ma=86400"
+						}
+					],
+					"cookie": [],
+					"body": "Sesión cerrada correctamente."
+				}
+			]
+		}
+	]
+}

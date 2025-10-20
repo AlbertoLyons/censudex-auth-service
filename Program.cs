@@ -1,19 +1,18 @@
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using censudex_auth_service.src.interfaces;
 using censudex_auth_service.src.services;
 using DotNetEnv;
 using System.Text;
-
+// Carga las variables de entorno
 Env.Load();
-
+// Obtiene la URL del servicio de clientes desde las variables de entorno
 var clients_api_url = Environment.GetEnvironmentVariable("CLIENTS_API_URL");
-
+// Configura la aplicación web
 var builder = WebApplication.CreateBuilder(args);
-
+// Registra el servicio de tokens en el contenedor de dependencias
 builder.Services.AddScoped<ITokenService, TokenService>();
-
+// Configura la autenticación JWT
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -29,24 +28,22 @@ builder.Services
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Env.GetString("JWT_SIGNING_KEY") ?? throw new InvalidOperationException("JWT_SIGNING_KEY is not set in environment variables.")))
         };
     });
-
+// Registra el servicio de clientes en el contenedor de dependencias
 ClientsService clientsService = new ClientsService(new HttpClient(), clients_api_url ?? throw new InvalidOperationException("CLIENTS_API_URL is not set in environment variables."));
-//var response = await clientsService.VerifyClientAsync<object>("adminCensudex", "Admin1234!");
+// Agrega servicios al contenedor de dependencias
 builder.Services.AddSingleton(clientsService);
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-
+// Configura la autorización
 builder.Services.AddAuthorization();
-
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
+// Utiliza la autenticación y autorización en la aplicación
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
