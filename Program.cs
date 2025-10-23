@@ -29,7 +29,8 @@ builder.Services
         };
     });
 // Registra el servicio de clientes en el contenedor de dependencias
-ClientsService clientsService = new ClientsService(new HttpClient(), clients_api_url ?? throw new InvalidOperationException("CLIENTS_API_URL is not set in environment variables."));
+ClientsService clientsService = new ClientsService(clients_api_url ?? throw new InvalidOperationException("CLIENTS_API_URL is not set in environment variables."));
+
 // Agrega servicios al contenedor de dependencias
 builder.Services.AddSingleton(clientsService);
 builder.Services.AddOpenApi();

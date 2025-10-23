@@ -41,7 +41,7 @@ namespace censudex_auth_service.src.controllers
         public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
         {
             // Verificar las credenciales del usuario
-            var client = await _clientsService.VerifyClientAsync<object>(loginDTO.Username, loginDTO.Password);
+            var client = await _clientsService.VerifyClientAsync(loginDTO.Username, loginDTO.Password);
             // Si las credenciales son incorrectas, devolver Unauthorized
             if (client == null)
             {

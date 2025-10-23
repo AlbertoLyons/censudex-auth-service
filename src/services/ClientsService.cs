@@ -1,16 +1,44 @@
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Text.Json;
-using System.Threading.Tasks;
 using censudex_auth_service.src.models;
+using Grpc.Net.Client;
 
 namespace censudex_auth_service.src.services
 {
     /// <summary>
-    /// Servicio para gestionar clientes y verificar credenciales utilizando un cliente HTTP.
+    /// Servicio para gestionar clientes y verificar credenciales utilizando gRPC.
     /// </summary>
     public class ClientsService
     {
+        private readonly UserProto.UserService.UserServiceClient _client;
+
+        public ClientsService(string address)
+        {
+            // Dirección del servicio remoto (puede venir de appsettings.json)
+            address = address ?? throw new ArgumentNullException(nameof(address));
+            // Crear el canal gRPC
+            var channel = GrpcChannel.ForAddress(address);
+            // Instanciar el cliente generado automáticamente
+            _client = new UserProto.UserService.UserServiceClient(channel);
+        }
+        public async Task<Auth?> VerifyClientAsync(string username, string password)
+        {
+            var request = new UserProto.VerifyCredentialsRequest
+            {
+                Username = username,
+                Password = password
+            };
+            var responseUser = await _client.VerifyCredentialsAsync(request);
+            if (string.IsNullOrEmpty(responseUser.Id))
+            {
+                return null;
+            }
+            var response = new Auth
+            {
+                Id = Guid.Parse(responseUser.Id),
+                Roles = responseUser.Roles.ToList()
+            };
+            return response;
+        }
+        /*
         /// <summary>
         /// Cliente HTTP para realizar solicitudes a la API de usuarios.
         /// </summary>
@@ -69,5 +97,6 @@ namespace censudex_auth_service.src.services
                 return result!;
             }
         }
+        */
     }
 }
