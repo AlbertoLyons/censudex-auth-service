@@ -4,6 +4,7 @@ using censudex_auth_service.src.interfaces;
 using censudex_auth_service.src.services;
 using DotNetEnv;
 using System.Text;
+using Grpc.AspNetCore.Web;
 // Carga las variables de entorno
 Env.Load();
 // Obtiene la URL del servicio de clientes desde las variables de entorno
@@ -38,12 +39,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 // Configura la autorización
 builder.Services.AddAuthorization();
+builder.Services.AddGrpc();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseGrpcWeb();
+app.MapGrpcService<UserProto.UserService.UserServiceClient>().EnableGrpcWeb();
 // Utiliza la autenticación y autorización en la aplicación
 app.UseAuthentication();
 app.UseAuthorization();

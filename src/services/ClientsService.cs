@@ -1,5 +1,7 @@
 using censudex_auth_service.src.models;
 using Grpc.Net.Client;
+using Grpc.Net.Client.Web;
+using System.Net.Http;
 
 namespace censudex_auth_service.src.services
 {
@@ -15,7 +17,11 @@ namespace censudex_auth_service.src.services
             // Dirección del servicio remoto (puede venir de appsettings.json)
             address = address ?? throw new ArgumentNullException(nameof(address));
             // Crear el canal gRPC
-            var channel = GrpcChannel.ForAddress(address);
+            var httpHandler = new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler());
+            var channel = GrpcChannel.ForAddress(address, new GrpcChannelOptions
+            {
+                HttpHandler = httpHandler
+            });
             // Instanciar el cliente generado automáticamente
             _client = new UserProto.UserService.UserServiceClient(channel);
         }
