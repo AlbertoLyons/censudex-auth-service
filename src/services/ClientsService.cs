@@ -25,77 +25,40 @@ namespace censudex_auth_service.src.services
             // Instanciar el cliente generado automáticamente
             _client = new UserProto.UserService.UserServiceClient(channel);
         }
-        public async Task<Auth?> VerifyClientAsync(string username, string password)
-        {
-            var request = new UserProto.VerifyCredentialsRequest
-            {
-                Username = username,
-                Password = password
-            };
-            var responseUser = await _client.VerifyCredentialsAsync(request);
-            if (string.IsNullOrEmpty(responseUser.Id))
-            {
-                return null;
-            }
-            var response = new Auth
-            {
-                Id = Guid.Parse(responseUser.Id),
-                Roles = responseUser.Roles.ToList()
-            };
-            return response;
-        }
-        /*
         /// <summary>
-        /// Cliente HTTP para realizar solicitudes a la API de usuarios.
+        /// Verifica las credenciales del cliente llamando al servicio gRPC.
         /// </summary>
-        private readonly HttpClient _httpClient;
-        /// <summary>
-        /// Constructor que inicializa el servicio con un cliente HTTP y una dirección base.
-        /// </summary>
-        /// <param name="httpClient"></param>
-        /// <param name="baseAddress"></param>
-        public ClientsService(HttpClient httpClient, string baseAddress)
-        {
-            _httpClient = httpClient;
-            // Agrega la dirección base la ruta específica para la API de usuarios
-            _httpClient.BaseAddress = new Uri(baseAddress + "/api/user/");
-        }
-        /// <summary>
-        /// Verifica las credenciales del cliente enviando una solicitud POST a la API de usuarios.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        /// <returns>Objeto Auth</returns>
-        public async Task<Auth?> VerifyClientAsync<T>(string username, string password)
+        /// <returns>Auth model</returns>
+        public async Task<Auth?> VerifyClientAsync(string username, string password)
         {
+            // Realizar la llamada gRPC para verificar las credenciales
             try
             {
-                // Envía una solicitud POST con las credenciales del cliente
-                var response = await _httpClient.PostAsJsonAsync("verifyCredentials", new
+                // Se crea la solicitud gRPC
+                var request = new UserProto.VerifyCredentialsRequest
                 {
                     Username = username,
                     Password = password
-                });
-                // Verifica si la respuesta fue exitosa
-                if (!response.IsSuccessStatusCode)
+                };
+                // Se realiza la llamada al servicio gRPC
+                var responseUser = await _client.VerifyCredentialsAsync(request);
+                // Si no se encuentra el usuario, devolver null
+                if (string.IsNullOrEmpty(responseUser.Id))
                 {
-                    Console.WriteLine($"Failed verifying client: {response.StatusCode}");
                     return null;
                 }
-                // Lee y deserializa la respuesta JSON en un objeto Auth
-                response.EnsureSuccessStatusCode();
-                // Lee el contenido de la respuesta como una cadena JSON
-                var json = await response.Content.ReadAsStringAsync();
-                // Deserializa la cadena JSON en un objeto Auth
-                var authClient = JsonSerializer.Deserialize<Auth>(json, new JsonSerializerOptions
+                // Mapear la respuesta gRPC al modelo Auth
+                var response = new Auth
                 {
-                    PropertyNameCaseInsensitive = true
-                });
-                // Devuelve el objeto Auth deserializado
-                return authClient;
+                    Id = Guid.Parse(responseUser.Id),
+                    Roles = responseUser.Roles.ToList()
+                };
+                // Devolver el modelo Auth
+                return response;
             }
-            // Maneja cualquier excepción que ocurra durante el proceso
+            // En caso de error, devolver null
             catch (Exception ex)
             {
                 Console.WriteLine($"Error verifying client: {ex.Message}");
@@ -103,6 +66,5 @@ namespace censudex_auth_service.src.services
                 return result!;
             }
         }
-        */
     }
 }

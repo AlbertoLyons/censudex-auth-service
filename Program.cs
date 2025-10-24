@@ -39,6 +39,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 // Configura la autorización
 builder.Services.AddAuthorization();
+// Configura gRPC
 builder.Services.AddGrpc();
 
 var app = builder.Build();
@@ -47,7 +48,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
+// Configura el middleware de gRPC-Web
 app.UseGrpcWeb();
 app.MapGrpcService<UserProto.UserService.UserServiceClient>().EnableGrpcWeb();
 // Utiliza la autenticación y autorización en la aplicación
