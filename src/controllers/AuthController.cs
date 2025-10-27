@@ -93,7 +93,11 @@ namespace censudex_auth_service.src.controllers
             var token = Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             // Invalida el token
             _tokenService.InvalidateToken(token);
-            return Ok("Sesión cerrada correctamente.");
+            var response = new
+            {
+                Message = "Sesión cerrada correctamente."
+            };
+            return Ok(response);
         }
     }
 }
