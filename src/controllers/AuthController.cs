@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using censudex_auth_service.src.dtos;
 using censudex_auth_service.src.interfaces;
+using censudex_auth_service.src.models;
 using censudex_auth_service.src.services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,18 +20,12 @@ namespace censudex_auth_service.src.controllers
         /// </summary>
         private readonly ITokenService _tokenService;
         /// <summary>
-        /// Servicio de clientes.
-        /// </summary>
-        private readonly ClientsService _clientsService;
-        /// <summary>
         /// Constructor del controlador de autenticación.
         /// </summary>
         /// <param name="tokenService"></param>
-        /// <param name="clientsService"></param>
-        public AuthController(ITokenService tokenService, ClientsService clientsService)
+        public AuthController(ITokenService tokenService)
         {
             _tokenService = tokenService;
-            _clientsService = clientsService;
         }
         /// <summary>
         /// Método para iniciar sesión del usuario.
@@ -38,17 +33,16 @@ namespace censudex_auth_service.src.controllers
         /// <param name="loginDTO"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
+        public async Task<IActionResult> Login([FromBody] Auth auth)
         {
             // Verificar las credenciales del usuario
-            var client = await _clientsService.VerifyClientAsync(loginDTO.Username, loginDTO.Password);
             // Si las credenciales son incorrectas, devolver Unauthorized
-            if (client == null)
+            if (auth == null)
             {
-                return Unauthorized("Usuario o contraseña incorrectos.");
+                return Unauthorized("Datos de autenticación no proporcionados.");
             }
             // Crear el token JWT
-            var token = _tokenService.CreateToken(client);
+            var token = _tokenService.CreateToken(auth);
             // Devolver el token al cliente
             var result = new
             {

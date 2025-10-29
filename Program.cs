@@ -7,8 +7,6 @@ using System.Text;
 using Grpc.AspNetCore.Web;
 // Carga las variables de entorno
 Env.Load();
-// Obtiene la URL del servicio de clientes desde las variables de entorno
-var clients_api_url = Environment.GetEnvironmentVariable("CLIENTS_API_URL");
 // Configura la aplicación web
 var builder = WebApplication.CreateBuilder(args);
 // Registra el servicio de tokens en el contenedor de dependencias
@@ -29,11 +27,8 @@ builder.Services
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Env.GetString("JWT_SIGNING_KEY") ?? throw new InvalidOperationException("JWT_SIGNING_KEY is not set in environment variables.")))
         };
     });
-// Registra el servicio de clientes en el contenedor de dependencias
-ClientsService clientsService = new ClientsService(clients_api_url ?? throw new InvalidOperationException("CLIENTS_API_URL is not set in environment variables."));
 
 // Agrega servicios al contenedor de dependencias
-builder.Services.AddSingleton(clientsService);
 builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
